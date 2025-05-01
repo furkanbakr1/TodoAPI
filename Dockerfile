@@ -1,17 +1,17 @@
 # Build aşaması
-FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
-WORKDIR /app
+FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
+WORKDIR /src
 
-# Proje dosyalarını kopyala ve derle
-COPY . ./
-WORKDIR /app/TodoApp.API
+COPY ./TodoApp.API ./TodoApp.API
+
+WORKDIR /src/TodoApp.API
 RUN dotnet restore
-RUN dotnet publish -c Release -o out
+RUN dotnet publish -c Release -o /app/publish
 
 # Runtime aşaması
-FROM mcr.microsoft.com/dotnet/aspnet:6.0
+FROM mcr.microsoft.com/dotnet/aspnet:8.0
 WORKDIR /app
-COPY --from=build /app/TodoApp.API/out ./
+COPY --from=build /app/publish ./
 ENV ASPNETCORE_URLS=http://+:10000
 EXPOSE 10000
 ENTRYPOINT ["dotnet", "TodoApp.API.dll"]
