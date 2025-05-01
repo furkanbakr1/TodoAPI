@@ -4,9 +4,8 @@ WORKDIR /src
 
 COPY . .
 
-WORKDIR /src/TodoApp.API
-RUN dotnet restore
-RUN dotnet publish -c Release -o /app/publish
+RUN dotnet restore TodoApp.sln
+RUN dotnet publish TodoApp.API/TodoApp.API.csproj -c Release -o /app/publish
 
 # Runtime aşaması
 FROM mcr.microsoft.com/dotnet/aspnet:8.0
