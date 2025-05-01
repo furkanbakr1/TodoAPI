@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: todo-api
+    runtime: dotnet
+    repo: https://github.com/furkanbakr1/TodoAPI
+    branch: main
+    buildCommand: dotnet build
+    startCommand: dotnet TodoApp.API.dll
+    rootDir: TodoApp.API
+    region: frankfurt
