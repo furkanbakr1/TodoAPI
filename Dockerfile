@@ -1,13 +1,13 @@
 # Build aşaması
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
-WORKDIR /src
+WORKDIR /app
 
 COPY . .
 
-# DİKKAT: Doğru yoldan .sln dosyasını gösteriyoruz
-RUN dotnet restore TodoApp/TodoApp.sln
+WORKDIR /app/TodoApp
+RUN dotnet restore
 
-RUN dotnet publish TodoApp.API/TodoApp.API.csproj -c Release -o /app/publish
+RUN dotnet publish ../TodoApp.API/TodoApp.API.csproj -c Release -o /app/publish
 
 # Runtime aşaması
 FROM mcr.microsoft.com/dotnet/aspnet:8.0
