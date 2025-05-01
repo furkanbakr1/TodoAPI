@@ -1,14 +1,15 @@
-# Build aşaması
+# Build stage
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /app
 
-COPY . .  # Tüm repo kopyalanır
+COPY . .
 
 WORKDIR /app/TodoApp
-RUN dotnet restore TodoApp.sln
+RUN dotnet restore
+
 RUN dotnet publish ../TodoApp.API/TodoApp.API.csproj -c Release -o /app/publish
 
-# Runtime aşaması
+# Runtime stage
 FROM mcr.microsoft.com/dotnet/aspnet:8.0
 WORKDIR /app
 COPY --from=build /app/publish .
