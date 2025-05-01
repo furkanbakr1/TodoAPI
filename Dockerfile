@@ -2,11 +2,10 @@
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /app
 
-COPY . .
+COPY . .  # Tüm repo kopyalanır
 
 WORKDIR /app/TodoApp
-RUN dotnet restore
-
+RUN dotnet restore TodoApp.sln
 RUN dotnet publish ../TodoApp.API/TodoApp.API.csproj -c Release -o /app/publish
 
 # Runtime aşaması
